@@ -3,7 +3,46 @@
 <head>
 	<title>Mock Login. Ajax | Slim php</title>
 	<link rel="stylesheet" type="text/css" href="assets/bootstrap.css">
-	<script type="text/javascript" src="assets/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/jquery.js"></script>
+	<script type="text/javascript">
+		
+		
+
+		$(document).ready(function(){
+			//since we are serving with command line, making port a constant facilitate ease of change.
+			const baseServer = 'http://localhost/myslimsitee/index.php';
+
+			//what will happen on blur of input
+			$("#userName").blur(function(){
+
+				//get the value of input
+				var userName = $("#userName").val();
+
+				//make an empty array to hold data for post request
+				var dat = {};
+
+				//our username is now an object of the data array
+				dat['username'] = userName;
+
+				console.log(dat);
+
+				$.post(baseServer+'/checkUser', dat, function(data) {
+					var obj = JSON.parse(data);
+					//var foo = data.data[0].status;
+					console.log(obj.message);
+					
+					
+					 if(obj.status == 'warning') {
+					 	$("#nameErr").append(obj.message);
+					  }
+				})
+
+				
+			})
+
+		})
+
+	</script>
 </head>
 <body>
 	<br>
